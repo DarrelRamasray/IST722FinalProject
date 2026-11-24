@@ -1,0 +1,174 @@
+# =====================================================================
+# _shared_dimensions__models.yml · conformed dimension tests (29)
+# dim_date, dim_customer, dim_employee and dim_track are shared by two or
+# more business processes. Employee Hire changed only the dim_date
+# description (full years 2002-2013).
+# =====================================================================
+
+version: 2
+
+models:
+  - name: dim_date
+    description: "One row per calendar day, for every full calendar year from the earliest invoice or hire date to the latest (2002-01-01 to 2013-12-31 today)."
+    columns:
+      - name: datekey
+        description: "Dimension key; the calendar date"
+        data_tests:
+          - unique
+          - not_null
+      - name: year
+        description: "Calendar year"
+        data_tests:
+          - not_null
+      - name: quarter
+        description: "Calendar quarter (1-4)"
+        data_tests:
+          - not_null
+      - name: month
+        description: "Month number (1-12)"
+        data_tests:
+          - not_null
+      - name: monthname
+        description: "Month name"
+        data_tests:
+          - not_null
+      - name: dayofmonth
+        description: "Day of the month"
+        data_tests:
+          - not_null
+      - name: dayofweek
+        description: "Day of the week (1 = Monday)"
+        data_tests:
+          - not_null
+      - name: dayname
+        description: "Day name"
+        data_tests:
+          - not_null
+
+  - name: dim_employee
+    description: "One row per employee."
+    columns:
+      - name: employeekey
+        description: "Dimension key"
+        data_tests:
+          - unique
+          - not_null
+      - name: employeeid
+        description: "Primary key of the source system table"
+        data_tests:
+          - unique
+          - not_null
+      - name: lastname
+        description: "Employee's last name"
+        data_tests:
+          - not_null
+      - name: firstname
+        description: "Employee's first name"
+        data_tests:
+          - not_null
+      - name: title
+        description: "Employee's job title"
+      - name: reportsto
+        description: "Employee ID of the employee's manager"
+      - name: birthdate
+        description: "Employee's birth date"
+      - name: hiredate
+        description: "Employee's hire date"
+      - name: address
+        description: "Employee's street address"
+      - name: city
+        description: "Employee's city"
+      - name: state
+        description: "Employee's state or province"
+      - name: country
+        description: "Employee's country"
+      - name: postalcode
+        description: "Employee's postal code"
+      - name: phone
+        description: "Employee's phone number"
+      - name: fax
+        description: "Employee's fax number"
+      - name: email
+        description: "Employee's email address"
+
+  - name: dim_customer
+    description: "One row per customer."
+    columns:
+      - name: customerkey
+        description: "Dimension key"
+        data_tests:
+          - unique
+          - not_null
+      - name: customerid
+        description: "Primary key of the source system table"
+        data_tests:
+          - unique
+          - not_null
+      - name: firstname
+        description: "Customer's first name"
+        data_tests:
+          - not_null
+      - name: lastname
+        description: "Customer's last name"
+        data_tests:
+          - not_null
+      - name: company
+        description: "Customer's company"
+      - name: address
+        description: "Customer's street address"
+      - name: city
+        description: "Customer's city"
+      - name: state
+        description: "Customer's state or province"
+      - name: country
+        description: "Customer's country"
+      - name: postalcode
+        description: "Customer's postal code"
+      - name: phone
+        description: "Customer's phone number"
+      - name: fax
+        description: "Customer's fax number"
+      - name: email
+        description: "Customer's email address"
+        data_tests:
+          - not_null
+      - name: supportrepid
+        description: "Employee ID of the customer's support rep"
+
+  - name: dim_track
+    description: "One row per track."
+    columns:
+      - name: trackkey
+        description: "Dimension key"
+        data_tests:
+          - unique
+          - not_null
+      - name: trackid
+        description: "Primary key of the source system table"
+        data_tests:
+          - unique
+          - not_null
+      - name: trackname
+        description: "Name of the track"
+        data_tests:
+          - not_null
+      - name: album
+        description: "Album the track belongs to"
+      - name: artist
+        description: "Artist of the track"
+      - name: mediatype
+        description: "Track's media type"
+      - name: genre
+        description: "Track's genre"
+      - name: composer
+        description: "Composer of the track"
+      - name: lengthms
+        description: "Length of track in milliseconds"
+        data_tests:
+          - not_null
+      - name: sizebytes
+        description: "Size of track in bytes"
+      - name: unitprice
+        description: "Price of the track"
+        data_tests:
+          - not_null

@@ -1,0 +1,108 @@
+# =====================================================================
+# _music_sales__models.yml · Music Sales tests (22)
+# fact_sale and dim_invoice: unique and not_null on keys, and a
+# relationships test from every fact_sale foreign key to its dimension.
+# =====================================================================
+
+version: 2
+
+models:
+  - name: fact_sale
+    description: "One row per track sold on an invoice line; each row is unique by invoicelineid."
+    columns:
+      - name: invoicelineid
+        description: "Source key used for drill-through"
+        data_tests:
+          - unique
+          - not_null
+      - name: invoiceid
+        description: "Degenerate dimension; the invoice number"
+        data_tests:
+          - not_null
+      - name: invoicekey
+        description: "Dimension FK for dim_invoice"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_invoice')
+                field: invoicekey
+      - name: trackkey
+        description: "Dimension FK for dim_track; Gives name, genre, media type, artist, album"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_track')
+                field: trackkey
+      - name: customerkey
+        description: "Dimension FK for dim_customer"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customerkey
+      - name: employeekey
+        description: "Dimension FK for dim_employee; the customer's support rep"
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_employee')
+                field: employeekey
+      - name: invoicedatekey
+        description: "Dimension FK for dim_date; the invoice date"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: datekey
+      - name: unitprice
+        description: "Unit price of the track; Non-additive; Unit price is used for averaging."
+        data_tests:
+          - not_null
+      - name: quantity
+        description: "Number of units sold; Additive"
+        data_tests:
+          - not_null
+      - name: saleamount
+        description: "Unit price * quantity; Additive"
+        data_tests:
+          - not_null
+
+  - name: dim_invoice
+    description: "One row per invoice."
+    columns:
+      - name: invoicekey
+        description: "Dimension key"
+        data_tests:
+          - unique
+          - not_null
+      - name: invoiceid
+        description: "Primary key of the source system table"
+        data_tests:
+          - unique
+          - not_null
+      - name: customerid
+        description: "Customer ID of the customer billed"
+        data_tests:
+          - not_null
+      - name: invoicedate
+        description: "Date of the invoice"
+        data_tests:
+          - not_null
+      - name: billingaddress
+        description: "Billing street address"
+      - name: billingcity
+        description: "Billing city"
+      - name: billingstate
+        description: "Billing state or province"
+      - name: billingcountry
+        description: "Billing country"
+      - name: billingpostalcode
+        description: "Billing postal code"
+      - name: total
+        description: "Invoice total"
+        data_tests:
+          - not_null

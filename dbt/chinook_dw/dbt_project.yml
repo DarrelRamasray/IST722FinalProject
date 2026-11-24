@@ -1,0 +1,27 @@
+# =====================================================================
+# dbt_project.yml · Team DIM Data · Chinook data warehouse
+# Builds three business processes (Music Sales, Track Playtime, Employee
+# Hire) and their shared dimensions from RAW.CHINOOK.
+# In the dbt platform this project sits in ist722dbt/music_sales/ (its
+# Milestone 2 folder name), with every model in one models/chinook folder.
+# =====================================================================
+
+name: 'chinook_dw'
+version: '1.0.0'
+
+# The dbt platform supplies the connection, so this name isn't used there.
+profile: 'default'
+
+model-paths: ["models"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  chinook_dw:
+    chinook:
+      # Every model under models/chinook, in every subfolder, is built as a
+      # table in <dev schema>_CHINOOK, e.g. DBT_DRAMASRAY_CHINOOK.
+      +materialized: table
+      +schema: chinook
