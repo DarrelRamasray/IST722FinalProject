@@ -1,6 +1,7 @@
 # IST 722 Data Warehouse · Team DIM Data
 
-Syracuse University, Fall 2026 (instructor Joseph Kinn). Team: Darrel Ramasray, Insha Maniyar, Melanie Thomas.
+Syracuse University, Fall 2026
+Team: Darrel Ramasray, Insha Maniyar, Melanie Thomas.
 
 A Kimball-style data warehouse for the Chinook digital music store. It uses a bus matrix, conformed dimensions and one star schema per business process, built in Snowflake with dbt and reported in Power BI.
 
